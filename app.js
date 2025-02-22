@@ -24,3 +24,13 @@ function atualizarLista() {
     });
 }
 
+function sortearAmigo() {
+    if (listaDeAmigos.length === 0) {
+        alert("Adicione pelo menos um amigo antes de sortear!");
+        return;
+    }
+    let indiceSorteado = Math.floor(Math.random() * listaDeAmigos.length);
+    let amigoSorteado = listaDeAmigos[indiceSorteado];
+    document.getElementById("resultado").innerHTML = `<li>${amigoSorteado}</li>`;
+}
+
