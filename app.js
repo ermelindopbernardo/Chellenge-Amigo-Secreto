@@ -5,13 +5,18 @@ let listaDeAmigos = [];
 function adicionarAmigo() {
     let input = document.getElementById("amigo");
     let nome = input.value.trim();
-    if (nome == "") {
-       alert("Por favor, insira um nome.");
-       return;
+    
+    if (!/^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$/.test(nome)) {
+        alert("Digite um nome válido.");
+        return;
     }
+    
+    nome = nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase();
+    
     listaDeAmigos.push(nome);
     atualizarLista();
     input.value = "";
+    
 }
 
 function atualizarLista() {
@@ -20,17 +25,27 @@ function atualizarLista() {
     listaDeAmigos.forEach(nome => {
         let li = document.createElement("li");
         li.textContent = nome;
+        li.style.color = gerarCorAleatoria();
         lista.appendChild(li);
     });
 }
 
-function sortearAmigo() {
-    if (listaDeAmigos.length === 0) {
-        alert("Adicione pelo menos um amigo antes de sortear!");
-        return;
+function gerarCorAleatoria() {
+    let letras = '0123456789ABCDEF';
+    let cor = '#';
+    for (let i = 0; i < 6; i++) {
+        cor += letras[Math.floor(Math.random() * 16)];
     }
+    return cor;
+}
+
+
+
+function sortearAmigo() {
+    
     let indiceSorteado = Math.floor(Math.random() * listaDeAmigos.length);
-    let amigoSorteado = listaDeAmigos[indiceSorteado];
+    let amigoSorteado =  listaDeAmigos.splice(indiceSorteado, 1)[0];
     document.getElementById("resultado").innerHTML = `<li>${amigoSorteado}</li>`;
+    atualizarLista();
 }
 
